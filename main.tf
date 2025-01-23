@@ -1,3 +1,9 @@
+provider "aws" {
+  region     = "ap-southeast-2" # < --- here 
+  access_key = TF_VAR_ACCESS_KEY
+  secret_key = TF_VAR_SECRET_KEY
+}
+
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
