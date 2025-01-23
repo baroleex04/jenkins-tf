@@ -1,34 +1,32 @@
 pipeline {
-  agent any
+    agent any
 
-  tools {
-        terraform 'terraform'  // This name should match the name you configured
+    stages {
+        stage('Install Terraform') {
+            steps {
+                script {
+                    // Download the correct Terraform version
+                    sh '''
+                        curl -LO https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip
+                        unzip terraform_1.3.7_linux_amd64.zip
+                        sudo mv terraform /usr/local/bin/
+                        terraform --version
+                    '''
+                }
+            }
+        }
+        stage('Terraform Plan and Apply') {
+            steps {
+                script {
+                    // Your terraform plan and apply steps go here
+                    sh '''
+                        terraform init
+                        terraform validate
+                        terraform plan
+                        terraform apply -auto-approve
+                    '''
+                }
+            }
+        }
     }
-
-  environment {
-    AWS_ACCESS_KEY_ID     = credentials('aws-secret-key-id')
-    AWS_SECRET_ACCESS_KEY = credentials('aws-access-key-id')
-  }
-
-  stages {
-    stage('Init Provider') {
-      steps {
-        sh 'terraform --version'
-        echo 'terraform init'
-      }
-    }
-    stage('Plan Resources') {
-      steps {
-        echo 'terraform plan'
-      }
-    }
-    stage('Apply Resources') {
-      input {
-        message "Do you want to proceed for production deployment?"
-      }
-      steps {
-        echo 'terraform apply -auto-approve'
-      }
-    }
-  }
 }
