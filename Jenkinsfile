@@ -24,9 +24,8 @@ pipeline {
                 script {
                     // Your terraform plan and apply steps go here
                     sh '''
-                        terraform init
-                        terraform validate
-                        terraform plan -input=false -var 'access_key=${AWS_ACCESS_KEY}' -var 'secret_key=${AWS_ACCESS_KEY}'
+                        export $AWS_ACCESS_KEY
+                        export $AWS_SECRET_KEY
                     '''
                 }
             }
