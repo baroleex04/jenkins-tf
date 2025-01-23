@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    
     stages {
         stage('Install Terraform') {
             steps {
@@ -17,11 +16,17 @@ pipeline {
         stage('Terraform Plan and Apply') {
             steps {
                 script {
-                    // Your terraform plan and apply steps go here
-                    sh '''
-                        echo $ACCESS_KEY
-                        echo $SECRET_KEY
-                    '''
+                    // Assuming your credential ID is 'aws-credentials'
+                    withCredentials([
+                        string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY'),
+                        string(credentialsId: 'aws-secret-key-id', variable: 'AWS_SECRET_KEY')
+                    ]) {
+                        sh '''
+                            terraform init
+                            terraform validate
+                            terraform plan -var 'access_key=${AWS_ACCESS_KEY}' -var 'secret_key=${AWS_SECRET_KEY}'
+                        '''
+                    }
                 }
             }
         }
