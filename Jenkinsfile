@@ -13,12 +13,13 @@ pipeline {
   stages {
     stage('Init Provider') {
       steps {
-        sh 'terraform init'
+        sh 'terraform --version'
+        echo 'terraform init'
       }
     }
     stage('Plan Resources') {
       steps {
-        sh 'terraform plan'
+        echo 'terraform plan'
       }
     }
     stage('Apply Resources') {
@@ -26,7 +27,7 @@ pipeline {
         message "Do you want to proceed for production deployment?"
       }
       steps {
-        sh 'terraform apply -auto-approve'
+        echo 'terraform apply -auto-approve'
       }
     }
   }
