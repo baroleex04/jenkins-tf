@@ -25,8 +25,8 @@ pipeline {
                         sh '''
                             terraform init
                             terraform validate
-                            terraform plan -var access_key=${AWS_ACCESS_KEY} secret_key=${AWS_SECRET_KEY}
-                            terraform apply -var access_key=${AWS_ACCESS_KEY} secret_key=${AWS_SECRET_KEY}
+                            terraform plan -var access_key=${AWS_ACCESS_KEY} -var secret_key=${AWS_SECRET_KEY}
+                            terraform apply -var access_key=${AWS_ACCESS_KEY} -var secret_key=${AWS_SECRET_KEY}
                         '''
                     }
                 }
