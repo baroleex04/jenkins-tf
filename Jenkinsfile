@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TERRAFORM_BIN = '/home/jenkins/bin'
+        TERRAFORM_BIN = '/${env.WORKSPACE}/terraform'
     }
 
     stages {
