@@ -7,10 +7,10 @@ pipeline {
                 script {
                     // Download the correct Terraform version
                     sh '''
-                        sudo yum install -y yum-utils
-                        sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-                        sudo yum -y install terraform
-                        terraform -help
+                        curl -LO https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip
+                        unzip terraform_1.3.7_linux_amd64.zip
+                        mv terraform /usr/local/bin/
+                        terraform --version
                     '''
                 }
             }
