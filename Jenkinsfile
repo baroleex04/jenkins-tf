@@ -19,8 +19,8 @@ pipeline {
                 script {
                     // Your terraform plan and apply steps go here
                     sh '''
-                        export $AWS_ACCESS_KEY
-                        export $AWS_SECRET_KEY
+                        echo $AWS_ACCESS_KEY
+                        echo $AWS_SECRET_KEY
                     '''
                 }
             }
