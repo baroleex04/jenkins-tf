@@ -1,21 +1,15 @@
 pipeline {
     agent any
 
-    environment {
-        TERRAFORM_BIN = '/${env.WORKSPACE}/terraform'
-    }
-
     stages {
         stage('Install Terraform') {
             steps {
                 script {
                     // Download the correct Terraform version
                     sh '''
-                        mkdir -p ${TERRAFORM_BIN}
-                        curl -LO https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip
-                        unzip -o terraform_1.3.7_linux_amd64.zip -d ${TERRAFORM_BIN}
-                        export PATH=${TERRAFORM_BIN}:$PATH
-                        terraform --version
+                        sudo yum install -y yum-utils
+                        sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+                        sudo yum -y install terraform
                     '''
                 }
             }
