@@ -1,13 +1,10 @@
 pipeline {
   agent any
 
-  tools {
-    terraform 'terraform'
-  }
-
   environment {
     AWS_ACCESS_KEY_ID     = credentials('aws-secret-key-id')
     AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+    TF_HOME = tool name: 'terraform', type: 'Terraform'
   }
 
   stages {
